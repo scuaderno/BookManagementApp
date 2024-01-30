@@ -3,10 +3,11 @@ package com.book.app.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -58,7 +59,7 @@ public class CustomerController {
 	}
 	
 	@PostMapping("/customer/newCustomer")
-	public ResponseEntity<Customer> createCustomer(Customer customer) {
+	public ResponseEntity<Customer> createCustomer(@Valid Customer customer) {
 		Customer customerResponse = new Customer();
 		try {
 			customerResponse = customerService.saveCustomer(customer);
@@ -84,11 +85,11 @@ public class CustomerController {
 	}
 	
 	@DeleteMapping(value="/customer/delete/{customerId}")
-	public ResponseEntity<Customer> deleteCustomer(@PathVariable("customerId") int customerId) {
-		Customer customerResponse = new Customer();
+	public ResponseEntity<?> deleteCustomer(@PathVariable("customerId") int customerId) {
 		try {
-			customerResponse = customerService.deleteCustomer(customerId);
-			return ResponseEntity.ok().body(customerResponse);
+			customerService.deleteCustomer(customerId);
+			logger.info("Successfully deleted customer id: {}" + customerId);
+			return ResponseEntity.ok().build();
 		} catch (Exception e) {
 			logger.info(e.getMessage());
 			e.printStackTrace();

@@ -3,6 +3,19 @@ package com.book.app.entity;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+@Entity
+@Table(name="books")
+@EntityListeners(AuditingEntityListener.class)
 public class Book implements Serializable {
 
 	/**
@@ -10,13 +23,29 @@ public class Book implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="book_refno")
 	private int book_refno;
+	
+	@Column(name="book_title")
 	private String book_title;
+	
+	@Column(name="book_price")
 	private BigDecimal book_price;
+	
+	@Column(name="quantity")
 	private int quantity;
+	
+	@Column(name="year_published")
 	private int year_published;
+	
+	@Column(name="author")
 	private String author;
+	
+	@Column(name="category")
 	private String category;
+	
 	public int getBook_refno() {
 		return book_refno;
 	}

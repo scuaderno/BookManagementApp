@@ -2,6 +2,19 @@ package com.book.app.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+@Entity
+@Table(name="customer")
+@EntityListeners(AuditingEntityListener.class)
 public class Customer implements Serializable {
 
 	/**
@@ -9,12 +22,27 @@ public class Customer implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="customer_refno")
 	private int customer_refno;
+	
+	@Column(name="firstname")
 	private String firstname;
+	
+	@Column(name="lastname")
 	private String lastname;
+	
+	@Column(name="office_email")
 	private String office_email;
+	
+	@Column(name="personal_email")
 	private String personal_email;
+	
+	@Column(name="mobile_number")
 	private String mobile_number;
+	
+	@Column(name="status")
 	private String status;
 	
 	
